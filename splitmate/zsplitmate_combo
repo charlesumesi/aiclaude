@@ -1,0 +1,66 @@
+Build the complete Splitmate app on top of the existing structure.
+Important: use localStorage only for all data storage - no backend, no server,
+no API calls, no mock servers. We will move to Supabase later in the project.
+All data lives in the browser. All data goes through src/data/storage.js only -
+nothing else in the app should read or write localStorage directly.
+
+--- Auth ---
+Users can register (name + email password) and log in.
+Plain text passwords are fine for now – this is local testing only.
+Keep all auth logic inside AuthContext - nothing else should touch it directly.
+Pre-create 4 test accounts on first load:
+    charles@test.com  /password
+    bob@test.com      /password
+    rahul@test.com    /password
+    eva@test.com      /password
+
+--- Landing Page (/) ---
+Public page – no login required. Explains what Splitmate does.
+Show: a headline, a brief description of the key features (create groups, track shared expenses, see who owes what), and a "Get started" button → /register.
+A "Sign in" link for existing users → /login. If the user is already logged in, automatically redirect to /dashboard.
+
+--- Dashboard (/dashboard) ---
+What logged-in users see after signing in. Show all groups the user belongs to.
+Each group card shows: name, member count, and the user's current balance
+("You're owed £1,800" in green / "You owe £800" in red / "All settled" in grey).
+Top of page: three summary numbers
+total you owe, net balance.
+total owed to you,
+Empty state with a "Create group" button if they have no groups.
+
+--- Create Group ---
+User enters a group name and adds members one at a time by email.
+If the email belongs to a registered user → add as active.
+If not → add as pending (they'll get access when they register).
+Show a "pending" label next to unregistered members. Creator is added automatically.
+After saving, redirect to that group's detail page.
+
+--- Group Detail ---
+Shows the group name, member list (active / pending), and all expenses.
+For each expense: description, total amount, who paid, date.
+Balance summary at the bottom – from the current user' perspective:
+    "You owe Charles £800" (prominent, red)
+    "Bob owes you £200" (prominent, green)
+    "Rahul owes Bob £300" (muted - doesn't involve the current user)
+Button to add a new expense. Option to delete an expense.
+
+--- Add Expense (modal, not a separate page) ---
+When a user clicks "Add expense" in the group detail page, a modal opens on top.
+No navigation - the group detail page stays in the background.
+
+Modal fields: what it was for, total amount, date, who paid (dropdown),
+who shares it (checkboxes - all selected by default). 
+Split equally by default - show each person's share live as they type.
+Save button closes the modal and the expense appears immediately in the list.
+Cancel button closes without saving.
+
+No /group/:id/expense/new route needed lives inside GroupDetailPage.
+Balance Calculation
+
+--- Balance Calculation ---
+Calculate the minimum umber of payments to settle all debts in a group.
+Example: if Charles paid for dinner and Bob paid for the cab, end up with
+one settlement ("Bob owes Charles £200") instead of two transfers.
+Always exclude soft-deleted expenses from calculations. 
+Soft delete: when a user removes an expense, set isDeleted: true
+never actually delete the record. Balance always recalculates from scratch.

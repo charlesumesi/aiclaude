@@ -1,0 +1,25 @@
+We want to add unequal expense splitting to Splitmate.
+
+Right now, every expense splits the total equally between all members.
+
+We want to let users enter a custom amount per person instead.
+
+The app currently stores expenses with splits array:
+
+splits: [{ memberId, amount }]
+
+The balance calculation reads splits[].amount directly.
+
+Think through:
+
+1. What changes in the Add Expense modal (UI for equal vs manual split).
+
+2. How to validate that manual amounts add up to the total.
+
+3. Whether the data model needs to change.
+
+4. What the balance.js utility needs to handle differently (if anything).
+
+5. Edge cases: What if the user switches between equal and manual mid-form?
+
+Do not write any code yet. Just outline the plan.

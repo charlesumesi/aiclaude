@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens ---------- */
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Only these six text sizes exist in the app. */
+  --text-*: initial;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 26px;
+  --text-lg--font-weight: 600;
+  --text-xl: 24px;
+  --text-xl--line-height: 32px;
+  --text-xl--font-weight: 700;
+  --text-2xl: 30px;
+  --text-2xl--line-height: 36px;
+  --text-2xl--font-weight: 800;
+
+  /* Surfaces */
+  --color-page: #f8f7f4;
+  --color-surface: #ffffff;
+  --color-line: #e8e4de;
+
+  /* Brand: buttons, focus, links, active states only */
+  --color-primary: #ea580c;
+  --color-primary-hover: #c2410c;
+
+  /* Text */
+  --color-ink: #1c1917;
+  --color-ink-2: #78716c;
+  --color-ink-3: #a8a29e;
+
+  /* Money states only */
+  --color-pos: #065f46;
+  --color-pos-bg: #ecfdf5;
+  --color-neg: #991b1b;
+  --color-neg-bg: #fef2f2;
+  --color-settled: #57534e;
+  --color-settled-bg: #f5f5f4;
+
+  /* Member status */
+  --color-pending: #92400e;
+  --color-pending-bg: #fffbeb;
+
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+
+  --container-page: 680px;
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  /* One border colour everywhere. */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  button:not(:disabled),
+  select,
+  input[type="checkbox"],
+  input[type="date"] {
+    cursor: pointer;
+  }
+}
+
+/* ---------- Component recipes ---------- */
+
+@layer components {
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .btn-block {
+    width: 100%;
+  }
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
+  .btn-secondary {
+    background: var(--color-surface);
+    border-color: var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--color-page);
+  }
+  .btn-danger {
+    background: var(--color-danger);
+    color: #fff;
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: var(--color-danger-hover);
+  }
+
+  /* Small square button for close / remove icons */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: var(--color-ink-3);
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+  .icon-btn:hover {
+    background: var(--color-page);
+    color: var(--color-ink);
+  }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Forms */
+  .label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-ink);
+    transition:
+      border-color 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .input::placeholder {
+    color: var(--color-ink-3);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  }
+  select.input {
+    appearance: none;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2378716C' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+
+  .link {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  .link:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Member status badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+  .badge-active {
+    background: var(--color-pos-bg);
+    color: var(--color-pos);
+  }
+  .badge-pending {
+    background: var(--color-pending-bg);
+    color: var(--color-pending);
+  }
+
+  /* Balance pills */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill-pos {
+    background: var(--color-pos-bg);
+    color: var(--color-pos);
+  }
+  .pill-neg {
+    background: var(--color-neg-bg);
+    color: var(--color-neg);
+  }
+  .pill-settled {
+    background: var(--color-settled-bg);
+    color: var(--color-settled);
+  }
+
+  /* Every money figure */
+  .amount {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .avatar {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--color-settled-bg);
+    color: var(--color-settled);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+  }
+
+  .section-title {
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+}

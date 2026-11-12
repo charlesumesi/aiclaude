@@ -1,0 +1,104 @@
+Redesign Splitmate's visual identity. The current version looks like
+default Tailwind components. We need it to feel like a real product.
+Do not change any logic, routing, or data – only visual styling.
+
+-- COLOR SYSTEM --
+Background: #F8F7F4 (warm off-white not pure white, not gray)
+Surface: #FFFFFF (cards, modals, inputs)
+Border: #E8E4DE (all borders - one consistent value everywhere)
+
+Primary: #EA580C (orange-600 warm energetic, associated with money and action) 
+Primary hover: #C2410C (orange-700) 
+Primary text: #FFFFFF
+
+Text primary: #1C1197 (stone-900 - warmer than gray-900)
+Text secondary: #78716C (stone-900)
+Text muted: #A8A29E (stone-400 - for timestamps, labels)
+
+Financial colors - use these ONLY for balance/money states:
+Positive (owed to you): background #ECFDF5, text #065F46 (emerald)
+Negative (you owe): background #FEF2F2, text #991B1B (red)
+Neutral (settled): background #F5F5F4, text #57534E (stone)
+
+Danger (delete, destructive): #DC2626
+
+-- TYPOGRAPHY --
+Font: Inter (import from Google Fonts)
+    Size scale (use only these, nothing else): 
+    xs: 12px / 400 - timestamps, meta labels 
+    sm: 14px / 400 - body text, form labels, secondary content
+    base: 16px / 400 - default body
+    lg: 18px / 600 - card titles, section headings
+    xl: 24px / 700 - page headings
+    2xl: 30px / 800 - large financial amounts on dashboard
+
+Financial amounts always use:
+font-variant-numeric: tabular-nums (so digits align
+in columns)
+font-weight: 700 or 800
+
+-- SPACING & LAYOUT --
+Max page width: 680px, centered, horizontal padding 16px
+Section gap: 32px between major sections 
+Card internal padding: 20px
+Gap between list items: 8px
+Navbar: height 56px, border-bottom 1px solid #E8E4DE, bg white, sticky top
+
+-- COMPONENT RECIPES --
+
+Cards:
+    background: white
+    border: 1px solid #E8E4DE
+    border-radius: 12px
+    padding: 20px
+    NO box-shadow - use the border instead
+
+Buttons:
+    Primary: bg #EA580C, text white, border-radius 8px, px-4 py-2.5,
+        font-weight 500, font-size 14px 
+        Hover: bg #C2410C
+        No shadow, no gradient
+    Secondary: bg white, border 1px solid #E8E4DE, text #1C1917,
+        same sizing as primary
+        
+Danger: bg #DC2626, text white - same sizing
+
+Inputs:
+border: 1px solid #E8E4DE 
+order-radius: 8px
+padding: 10px 14px 
+font-size: 14px 
+background: white
+Focus: border-color #EA580C, ring: 0 0 0 3px rgba(234, 88, 12,0.12)
+No shadow
+
+Badges (member status):
+Active: bg #ECFDF5, text #065F46, font-size 12px, px-2 py-0,5, tunded-full
+Pending: bg #FFFBEB, text #92400E, same sizing
+Balance pills (in group cards):
+Use the financial colors above - colored background + matching text
+border-radius: 999px (fully rounded), px-3 py-1, font-size 13px, font-weight 600
+
+Modal:
+Overlay: rgba(0,0,0,0.4)
+
+Modal box: white, border-radius 16px, max-width 480px, padding 24px
+Header: title left, × button right, border-bottom 1px solid #E8E4DE, pb-4 mb-4
+
+-- VISUAL RULES (these prevent the AI-generated look) --
+
+1. The primary orange is used ONLY for: primary buttons, focused inputs, links, active states. Everything else is black, white, or stone. Resist using orange for headings or decorative elements.
+
+2. Financial amounts are always larger and bolder than surrounding text. "£1800" should visually dominate its card not blend in.
+
+3. The balance summary in Group Detail is the most important UI element. Settlements involving the current user go first, bold and full-color. Settlements not involving them go below, in stone/muted styling.
+
+4. Empty states: centered, stone-400 text, no icon unless it's a custom SVG. No emoji. No generic illustrations.
+
+5. No gradients, no shadows on buttons, no glow effects. Depth comes from the border and background contrast only.
+
+6. Member avatars: circle, 28px, bg stone-100, text stone-600, initials in 11px font-weight 600. No colored backgrounds per-user.
+
+7. Navbar: logo in font-weight 700, 16px. Right side: user's name in 14px stone-50, then a "Sign out" text link in stone-400. No icon buttons.
+
+8. Every page has the same warm off-white (#F8F7F4) background. Only cards and modals are white. Apply these styles consistently across all pages. After applying, check the dashboard and group detail page in particular if the balance amounts don't look like the most prominent thing on the screen, increase their size and weight.

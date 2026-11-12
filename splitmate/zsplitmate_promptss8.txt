@@ -1,0 +1,14 @@
+
+Inputs:
+border: 1px solid #E8E4DE border-radius: 8px
+padding: 10px 14px font-size: 14px background: white
+Focus: border-color #EA580C, ring: 0 0 0 3px rgba(234, 88, 12,0.12)
+No shadow
+Badges (member status):
+Active: bg #ECFDF5, text #065F46, font-size 12px, px-2 py-0,5, tunded-full
+Pending: bg #FFFBEB, text #92400E, same sizing
+Balance pills (in group cards):
+Use the financial colors above = colored background + matching text
+border-radius: 999px (fully rounded), px-3 py-1, font-size 13px, font-weight 600
+Modal:
+Overlay: rgba(0,0,0,0.4)

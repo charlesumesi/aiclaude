@@ -1,0 +1,29 @@
+
+#991B1B (red)
+Neutral (settled):
+#57534E (stone)
+background #F5F5F4, text
+Danger (delete, destructive): #DC2626
+TYPOGRAPHY
+Font: Inter (import from Google Fonts)
+Size scale (use only these, nothing else): XS: 12px / 400 timestamps, meta labels sm: 14px / 400
+content
+lg:
+base: 16px / 400 18px / 600 xl: 24px / 700 2xl: 30px / 800
+dashboard
+- body text, form labels, secondary
+—
+—
+—
+-
+Y
+default body
+card titles, section headings page headings
+large financial amounts on
+Financial amounts always use:
+font-variant-numeric: tabular-nums (so digits align
+in columns)
+font-weight: 700 or 800
+SPACING & LAYOUT
+Max page width: 680px, centered, horizontal padding 16px
+Section gap: 32px between major sections Card internal padding: 20px

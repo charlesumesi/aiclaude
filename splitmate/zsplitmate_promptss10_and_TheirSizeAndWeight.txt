@@ -1,0 +1,15 @@
+
+Settlements not involving them go below, in stone/muted styling.
+4. Empty states: centered, stone-400 text, no icon unless it's a custom
+SVG. No emoji. No generic illustrations.
+5. No gradients, no shadows on buttons, no glow effects.
+Depth comes from the border and background contrast only.
+6. Member avatars: circle, 28px, bg stone-100, text stone-600,
+initials in 11px font-weight 600. No colored backgrounds per-user.
+7. Navbar: logo in font-weight 700, 16px. Right side: user's name in
+14px stone-50, then a "Sign out" text link in stone-400. No icon buttons.
+8. Every page has the same warm off-white (#F8F7F4) background.
+Only cards and modals are white.
+Apply these styles consistently across all pages. After applying,
+check the dashboard and group detail page in particular if the balance
+amounts don't look like the most prominent thing on the screen, increase
