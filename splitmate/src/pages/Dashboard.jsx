@@ -18,7 +18,7 @@ async function loadDashboard(user) {
       return { ...group, myBalance: net.get(user.email) ?? 0 }
     }),
   )
-  return withBalances.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  return withBalances.sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''))
 }
 
 // Pill states what the number means; the number itself is the big figure next to it.
@@ -40,7 +40,7 @@ function GroupBalance({ amount }) {
 function SummaryCard({ label, amount, tone, prefix = '' }) {
   const colour = { pos: 'text-pos', neg: 'text-neg', none: 'text-ink' }[tone]
   return (
-    <div className="card">
+    <div className="card px-6 py-6">
       <p className="text-xs text-ink-2">{label}</p>
       <p className={`amount mt-2 text-2xl font-extrabold ${colour}`}>
         {prefix}
@@ -73,7 +73,7 @@ export default function Dashboard() {
   const net = owedToYou + youOwe
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-xl text-ink">Hi, {user.name}</h1>
         {groups.length > 0 && (
@@ -83,7 +83,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      <section className="grid gap-2 sm:grid-cols-3">
+      <section className="grid gap-8 sm:grid-cols-3">
         <SummaryCard label="Total you owe" amount={youOwe} tone={youOwe < 0 ? 'neg' : 'none'} />
         <SummaryCard
           label="Total owed to you"
@@ -99,7 +99,7 @@ export default function Dashboard() {
       </section>
 
       <section>
-        <h2 className="section-title">Your groups</h2>
+        <h2 className="section-title mb-4">Your groups</h2>
         {groups.length === 0 ? (
           <div className="card py-12 text-center">
             <p className="text-sm text-ink-3">You’re not in any groups yet.</p>
@@ -108,12 +108,12 @@ export default function Dashboard() {
             </Link>
           </div>
         ) : (
-          <ul className="space-y-2">
+          <ul className="grid gap-6 md:grid-cols-2">
             {groups.map((g) => (
               <li key={g.id}>
                 <Link
                   to={`/group/${g.id}`}
-                  className="card flex items-center justify-between gap-4 transition-colors hover:border-ink-3"
+                  className="card flex h-full items-center justify-between gap-4 px-6 py-6 transition-colors hover:border-ink-3"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-lg text-ink">{g.name}</p>

@@ -60,13 +60,13 @@ export default function CreateGroup() {
   }
 
   return (
-    <div>
+    <div className="max-w-3xl">
       <Link to="/dashboard" className="text-sm text-ink-2 transition-colors hover:text-ink">
         ← Back to dashboard
       </Link>
       <h1 className="mb-6 mt-3 text-xl text-ink">Create a group</h1>
 
-      <form onSubmit={handleSave} className="card space-y-6">
+      <form onSubmit={handleSave} className="card space-y-6 px-8 py-7">
         <div>
           <label htmlFor="group-name" className="label">
             Group name
@@ -85,7 +85,7 @@ export default function CreateGroup() {
           <label htmlFor="member-email" className="label">
             Add members by email
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <input
               id="member-email"
               type="email"
@@ -107,8 +107,8 @@ export default function CreateGroup() {
           </div>
           {memberError && <p className="mt-1.5 text-sm text-danger">{memberError}</p>}
 
-          <ul className="mt-3 divide-y divide-line rounded-lg border border-line">
-            <li className="flex items-center gap-3 px-3 py-2.5">
+          <ul className="mt-4 divide-y divide-line rounded-lg border border-line">
+            <li className="flex items-center gap-3 px-4 py-3">
               <Avatar name={user.name} email={user.email} />
               <span className="min-w-0 flex-1 truncate text-sm text-ink">
                 {user.name} <span className="text-ink-3">(you)</span>
@@ -118,7 +118,7 @@ export default function CreateGroup() {
               <span className="w-8" aria-hidden />
             </li>
             {members.map((m) => (
-              <li key={m.email} className="flex items-center gap-3 px-3 py-2.5">
+              <li key={m.email} className="flex items-center gap-3 px-4 py-3">
                 <Avatar name={m.name} email={m.email} />
                 <span className="min-w-0 flex-1 truncate text-sm text-ink">
                   {m.name ?? m.email}

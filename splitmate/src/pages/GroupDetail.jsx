@@ -1,12 +1,14 @@
 import { useCallback, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import * as storage from '../data/storage.js'
 import { useAsyncData } from '../hooks/useAsyncData.js'
 import { computeNetBalances, settleDebts } from '../utils/balances.js'
 import { formatMoney } from '../utils/money.js'
 import { memberLabel, memberLabelByEmail } from '../utils/members.js'
+import { categoryOf } from '../utils/categories.js'
 import AddExpenseModal from '../components/AddExpenseModal.jsx'
+import ExpenseDetailModal from '../components/ExpenseDetailModal.jsx'
 import Avatar from '../components/Avatar.jsx'
 import MemberBadge from '../components/MemberBadge.jsx'
 
@@ -21,7 +23,8 @@ async function loadGroup(groupId, userId) {
 }
 
 function formatDate(iso) {
-  const [y, m, d] = iso.split('-').map(Number)
+  if (!iso) return ''
+  const [y, m, d] = String(iso).slice(0, 10).split('-').map(Number)
   return new Date(y, m - 1, d).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -32,9 +35,12 @@ function formatDate(iso) {
 export default function GroupDetail() {
   const { id } = useParams()
   const { user } = useAuth()
+  const navigate = useNavigate()
   const { data, loading, error, reload } = useAsyncData(() => loadGroup(id, user.id), [id, user.id])
   const [showAdd, setShowAdd] = useState(false)
   const closeModal = useCallback(() => setShowAdd(false), [])
+  const [viewing, setViewing] = useState(null)
+  const closeDetail = useCallback(() => setViewing(null), [])
 
   if (loading) return <p className="text-sm text-ink-3">Loading…</p>
   if (error) return <p className="text-sm text-danger">Couldn’t load this group: {error.message}</p>
@@ -56,7 +62,9 @@ export default function GroupDetail() {
   const label = (email) => memberLabelByEmail(group.members, email, me)
 
   const sortedExpenses = [...expenses].sort(
-    (a, b) => b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt),
+    (a, b) =>
+      (b.date ?? '').localeCompare(a.date ?? '') ||
+      (b.createdAt ?? '').localeCompare(a.createdAt ?? ''),
   )
 
   const net = computeNetBalances(
@@ -85,6 +93,18 @@ export default function GroupDetail() {
     reload()
   }
 
+  async function handleDeleteGroup() {
+    const count = expenses.length
+    const ok = window.confirm(
+      `Delete the group “${group.name}”` +
+        (count ? ` and its ${count} expense${count === 1 ? '' : 's'}` : '') +
+        '? It will disappear for every member.',
+    )
+    if (!ok) return
+    await storage.softDeleteGroup(group.id, user.id)
+    navigate('/dashboard', { replace: true })
+  }
+
   return (
     <div className="space-y-8">
       <div>
@@ -97,9 +117,17 @@ export default function GroupDetail() {
             Add expense
           </button>
         </div>
+        <p className="mt-1 text-xs text-ink-3">
+          {group.createdAt && `Created ${formatDate(group.createdAt)} · `}
+          {expenses.length}{' '}
+          {expenses.length === 1 ? 'expense' : 'expenses'}
+        </p>
       </div>
 
-      <section>
+      {/* Wide screens: expenses on the left, members and balances on the right.
+          Narrow screens keep the order Members, Expenses, Balances. */}
+      <div className="grid items-start gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr]">
+      <section className="lg:col-start-2 lg:row-start-1">
         <h2 className="section-title">
           Members <span className="font-normal text-ink-3">{group.members.length}</span>
         </h2>
@@ -117,23 +145,39 @@ export default function GroupDetail() {
         </ul>
       </section>
 
-      <section>
+      <section className="lg:col-start-1 lg:row-span-2 lg:row-start-1">
         <h2 className="section-title">Expenses</h2>
         {sortedExpenses.length === 0 ? (
           <div className="card py-10 text-center text-sm text-ink-3">
             No expenses yet. Add the first one.
           </div>
         ) : (
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {sortedExpenses.map((e) => (
-              <li key={e.id} className="card flex items-center gap-4 py-4">
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-base font-medium text-ink">{e.description}</p>
-                  <p className="mt-0.5 text-xs text-ink-3">
-                    {label(e.paidBy)} paid · {formatDate(e.date)}
-                  </p>
-                </div>
-                <p className="amount text-lg text-ink">{formatMoney(e.amount)}</p>
+              <li
+                key={e.id}
+                className="card flex items-center gap-4 px-6 py-4 transition-colors hover:border-ink-3"
+              >
+                <button
+                  type="button"
+                  onClick={() => setViewing(e)}
+                  className="-my-2 flex min-w-0 flex-1 items-center gap-4 rounded-md py-2 text-left"
+                  aria-label={`See how ${e.description} is shared`}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <p className="truncate text-base font-medium text-ink">{e.description}</p>
+                      <span className="badge shrink-0 bg-settled-bg text-settled">
+                        {categoryOf(e)}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-ink-3">
+                      {label(e.paidBy)} paid · {formatDate(e.date)}
+                    </p>
+                  </div>
+                  <p className="amount text-lg text-ink">{formatMoney(e.amount)}</p>
+                  <span aria-hidden="true" className="text-ink-3">›</span>
+                </button>
                 <button
                   onClick={() => handleDelete(e)}
                   className="-mr-2 rounded-md px-2 py-1 text-xs text-ink-3 transition-colors hover:bg-neg-bg hover:text-danger"
@@ -147,7 +191,7 @@ export default function GroupDetail() {
         )}
       </section>
 
-      <section>
+      <section className="lg:col-start-2 lg:row-start-2">
         <h2 className="section-title">Balances</h2>
         {settlements.length === 0 ? (
           <div className="card py-10 text-center">
@@ -198,6 +242,23 @@ export default function GroupDetail() {
           </div>
         )}
       </section>
+      </div>
+
+      <div className="border-t border-line pt-6">
+        <button onClick={handleDeleteGroup} className="btn btn-danger">
+          Delete group
+        </button>
+      </div>
+
+      {viewing && (
+        <ExpenseDetailModal
+          expense={viewing}
+          members={group.members}
+          currentEmail={me}
+          dateText={formatDate(viewing.date)}
+          onClose={closeDetail}
+        />
+      )}
 
       {showAdd && (
         <AddExpenseModal

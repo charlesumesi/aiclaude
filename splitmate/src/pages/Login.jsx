@@ -37,7 +37,7 @@ export default function Login() {
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label htmlFor="email" className="label">
             Email
@@ -71,10 +71,6 @@ export default function Login() {
           Sign in
         </button>
       </form>
-      <p className="mt-5 rounded-lg border border-line bg-page px-3 py-2.5 text-xs text-ink-2">
-        Test accounts: charles@test.com, bob@test.com, rahul@test.com, eva@test.com. Password:{' '}
-        <code className="font-semibold text-ink">password</code>
-      </p>
     </AuthCard>
   )
 }

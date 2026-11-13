@@ -32,6 +32,9 @@
   --color-primary: #ea580c;
   --color-primary-hover: #c2410c;
 
+  /* Logo wordmark only */
+  --color-logo-red: #e8300c;
+
   /* Text */
   --color-ink: #1c1917;
   --color-ink-2: #78716c;
@@ -89,6 +92,17 @@
 /* ---------- Component recipes ---------- */
 
 @layer components {
+  /* Top bar: white with a firm edge so it stands apart from the page */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: 56px;
+    background: var(--color-surface);
+    border-bottom: 1px solid #d6d3d1;
+    box-shadow: 0 2px 8px rgb(28 25 23 / 0.08);
+  }
+
   .card {
     background: var(--color-surface);
     border: 1px solid var(--color-line);

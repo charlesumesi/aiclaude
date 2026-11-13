@@ -8,6 +8,7 @@ import Register from './pages/Register.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import CreateGroup from './pages/CreateGroup.jsx'
 import GroupDetail from './pages/GroupDetail.jsx'
+import MoveGroups from './pages/MoveGroups.jsx'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/group/new" element={<CreateGroup />} />
             <Route path="/group/:id" element={<GroupDetail />} />
+            <Route path="/move-groups" element={<MoveGroups />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

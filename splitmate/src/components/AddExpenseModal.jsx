@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import Modal from './Modal.jsx'
 import { formatMoney, parseAmount, penceToInput, splitEqually } from '../utils/money.js'
+import { CATEGORIES, DEFAULT_CATEGORY } from '../utils/categories.js'
 
 function todayISO() {
   const d = new Date()
@@ -14,6 +15,7 @@ export default function AddExpenseModal({ members, currentEmail, onSave, onClose
   const [amountInput, setAmountInput] = useState('')
   const [date, setDate] = useState(todayISO)
   const [paidBy, setPaidBy] = useState(currentEmail)
+  const [category, setCategory] = useState(DEFAULT_CATEGORY)
   const [sharedBy, setSharedBy] = useState(() => new Set(members.map((m) => m.email)))
   const [splitMode, setSplitMode] = useState('equal') // 'equal' | 'manual'
   // Raw text per member in manual mode, so half-typed values like "12." aren't reformatted.
@@ -139,6 +141,7 @@ export default function AddExpenseModal({ members, currentEmail, onSave, onClose
         amount,
         date,
         paidBy,
+        category,
         splitType: splitMode,
         splits,
       })
@@ -198,22 +201,41 @@ export default function AddExpenseModal({ members, currentEmail, onSave, onClose
           </div>
         </div>
 
-        <div>
-          <label className="label" htmlFor="exp-paid">
-            Who paid?
-          </label>
-          <select
-            id="exp-paid"
-            className="input"
-            value={paidBy}
-            onChange={(e) => setPaidBy(e.target.value)}
-          >
-            {members.map((m) => (
-              <option key={m.email} value={m.email}>
-                {m.label}
-              </option>
-            ))}
-          </select>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="label" htmlFor="exp-paid">
+              Who paid?
+            </label>
+            <select
+              id="exp-paid"
+              className="input"
+              value={paidBy}
+              onChange={(e) => setPaidBy(e.target.value)}
+            >
+              {members.map((m) => (
+                <option key={m.email} value={m.email}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="label" htmlFor="exp-category">
+              Category
+            </label>
+            <select
+              id="exp-category"
+              className="input"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <fieldset>

@@ -11,7 +11,7 @@ export function computeNetBalances(memberEmails, expenses) {
   for (const expense of expenses) {
     if (expense.isDeleted) continue
     net.set(expense.paidBy, (net.get(expense.paidBy) ?? 0) + expense.amount)
-    for (const split of expense.splits) {
+    for (const split of expense.splits ?? []) {
       net.set(split.email, (net.get(split.email) ?? 0) - split.amount)
     }
   }
