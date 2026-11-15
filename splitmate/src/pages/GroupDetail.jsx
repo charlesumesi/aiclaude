@@ -89,7 +89,11 @@ export default function GroupDetail() {
 
   async function handleDelete(expense) {
     if (!window.confirm(`Delete “${expense.description}”?`)) return
-    await storage.softDeleteExpense(expense.id, user.id)
+    try {
+      await storage.softDeleteExpense(expense.id, user.id)
+    } catch (err) {
+      window.alert(`Couldn’t delete this expense: ${err.message}`)
+    }
     reload()
   }
 
@@ -101,7 +105,12 @@ export default function GroupDetail() {
         '? It will disappear for every member.',
     )
     if (!ok) return
-    await storage.softDeleteGroup(group.id, user.id)
+    try {
+      await storage.softDeleteGroup(group.id, user.id)
+    } catch (err) {
+      window.alert(`Couldn’t delete this group: ${err.message}`)
+      return
+    }
     navigate('/dashboard', { replace: true })
   }
 

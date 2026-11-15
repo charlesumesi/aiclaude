@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T00:00:00Z",
+  "title": "Design System: Splitmate",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Ember Orange", "canonical": "#ea580c", "tonalRamp": ["#431407", "#7c2d12", "#9a3412", "#c2410c", "#ea580c", "#fb923c", "#fed7aa", "#fff7ed"] },
+      "primary-hover": { "role": "primary", "displayName": "Deep Ember", "canonical": "#c2410c" },
+      "logo-red": { "role": "secondary", "displayName": "Wordmark Red", "canonical": "#e8300c", "tonalRamp": ["#450a0a", "#7f1d1d", "#a7230b", "#c9290b", "#e8300c", "#f2785e", "#f9c3b6", "#fef2ef"] },
+      "page": { "role": "neutral", "displayName": "Warm Paper", "canonical": "#f8f7f4" },
+      "surface": { "role": "neutral", "displayName": "Card White", "canonical": "#ffffff" },
+      "line": { "role": "neutral", "displayName": "Stone Hairline", "canonical": "#e8e4de" },
+      "navbar-edge": { "role": "neutral", "displayName": "Navbar Edge", "canonical": "#d6d3d1" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1c1917", "tonalRamp": ["#0c0a09", "#1c1917", "#292524", "#44403c", "#57534e", "#78716c", "#a8a29e", "#e7e5e4"] },
+      "ink-2": { "role": "neutral", "displayName": "Slate Ink", "canonical": "#78716c" },
+      "ink-3": { "role": "neutral", "displayName": "Faint Ink", "canonical": "#a8a29e" },
+      "pos": { "role": "semantic", "displayName": "Owed Green", "canonical": "#065f46", "tonalRamp": ["#022c22", "#064e3b", "#065f46", "#047857", "#059669", "#34d399", "#a7f3d0", "#ecfdf5"] },
+      "pos-bg": { "role": "semantic", "displayName": "Owed Green Tint", "canonical": "#ecfdf5" },
+      "neg": { "role": "semantic", "displayName": "Owe Red", "canonical": "#991b1b", "tonalRamp": ["#450a0a", "#7f1d1d", "#991b1b", "#b91c1c", "#dc2626", "#f87171", "#fecaca", "#fef2f2"] },
+      "neg-bg": { "role": "semantic", "displayName": "Owe Red Tint", "canonical": "#fef2f2" },
+      "settled": { "role": "semantic", "displayName": "Settled Stone", "canonical": "#57534e" },
+      "settled-bg": { "role": "semantic", "displayName": "Settled Stone Tint", "canonical": "#f5f5f4" },
+      "pending": { "role": "semantic", "displayName": "Pending Amber", "canonical": "#92400e", "tonalRamp": ["#451a03", "#78350f", "#92400e", "#b45309", "#d97706", "#fbbf24", "#fde68a", "#fffbeb"] },
+      "pending-bg": { "role": "semantic", "displayName": "Pending Amber Tint", "canonical": "#fffbeb" },
+      "danger": { "role": "semantic", "displayName": "Danger Red", "canonical": "#dc2626" },
+      "danger-hover": { "role": "semantic", "displayName": "Danger Red Deep", "canonical": "#b91c1c" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Logo wordmark and top-level page titles." },
+      "headline": { "displayName": "Headline", "purpose": "Page headings, group names, large summary figures." },
+      "title": { "displayName": "Title", "purpose": "Section titles, card headings, modal titles." },
+      "body": { "displayName": "Body", "purpose": "Default running text; 65-75ch measure." },
+      "body-sm": { "displayName": "Body Small", "purpose": "Buttons, inputs, labels, list rows, most UI text." },
+      "label": { "displayName": "Label", "purpose": "Badges, dates, numbering, fine metadata." },
+      "amount": { "displayName": "Amount", "purpose": "Every money figure: bold, tabular figures." }
+    },
+    "shadows": [
+      { "name": "navbar-lift", "value": "0 2px 8px rgb(28 25 23 / 0.08)", "purpose": "Sticky navbar only." },
+      { "name": "focus-halo", "value": "0 0 0 3px rgba(234, 88, 12, 0.12)", "purpose": "Focused inputs; a state, not elevation." }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "120ms ease", "purpose": "Background, border and colour transitions on buttons, icon buttons and inputs." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one solid action per view.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Add expense</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border:1px solid transparent; border-radius:8px; font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; white-space:nowrap; cursor:pointer; transition:background-color 120ms ease, border-color 120ms ease, color 120ms ease; } .ds-btn:focus-visible { outline:2px solid var(--color-primary, #ea580c); outline-offset:2px; } .ds-btn-primary { background:var(--color-primary, #ea580c); color:#fff; } .ds-btn-primary:hover { background:var(--color-primary-hover, #c2410c); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Cancel and other non-primary actions.",
+      "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary { display:inline-flex; align-items:center; justify-content:center; padding:10px 16px; border:1px solid var(--color-line, #e8e4de); border-radius:8px; background:var(--color-surface, #fff); color:var(--color-ink, #1c1917); font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; cursor:pointer; transition:background-color 120ms ease; } .ds-btn-secondary:hover { background:var(--color-page, #f8f7f4); } .ds-btn-secondary:focus-visible { outline:2px solid var(--color-primary, #ea580c); outline-offset:2px; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Confirms a destructive action (delete).",
+      "html": "<button class=\"ds-btn-danger\">Delete expense</button>",
+      "css": ".ds-btn-danger { display:inline-flex; align-items:center; padding:10px 16px; border:1px solid transparent; border-radius:8px; background:var(--color-danger, #dc2626); color:#fff; font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; cursor:pointer; transition:background-color 120ms ease; } .ds-btn-danger:hover { background:var(--color-danger-hover, #b91c1c); } .ds-btn-danger:focus-visible { outline:2px solid var(--color-primary, #ea580c); outline-offset:2px; }"
+    },
+    {
+      "name": "Outlined Sign-in Button",
+      "kind": "button",
+      "refersTo": "button-outline-accent",
+      "description": "Navbar Sign in / Sign out: orange outline with icon, fills on hover.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4\"/><path d=\"M10 17l5-5-5-5\"/><path d=\"M15 12H3\"/></svg>Sign in</a>",
+      "css": ".ds-btn-outline { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid var(--color-primary, #ea580c); border-radius:8px; background:var(--color-surface, #fff); color:var(--color-primary, #ea580c); font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; text-decoration:none; transition:background-color 120ms ease, color 120ms ease; } .ds-btn-outline:hover { background:var(--color-primary, #ea580c); color:#fff; } .ds-btn-outline:focus-visible { outline:2px solid var(--color-primary, #ea580c); outline-offset:2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled field with orange focus border and halo.",
+      "html": "<label class=\"ds-label\" for=\"ds-amt\">Amount</label><input id=\"ds-amt\" class=\"ds-input\" placeholder=\"0.00\" />",
+      "css": ".ds-label { display:block; margin-bottom:6px; font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; color:var(--color-ink, #1c1917); } .ds-input { width:100%; padding:10px 14px; background:var(--color-surface, #fff); border:1px solid var(--color-line, #e8e4de); border-radius:8px; font:400 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; color:var(--color-ink, #1c1917); transition:border-color 120ms ease, box-shadow 120ms ease; } .ds-input::placeholder { color:var(--color-ink-3, #a8a29e); } .ds-input:focus { outline:none; border-color:var(--color-primary, #ea580c); box-shadow:0 0 0 3px rgba(234,88,12,0.12); }"
+    },
+    {
+      "name": "Navbar",
+      "kind": "nav",
+      "refersTo": "navbar",
+      "description": "Sticky white bar with firm edge and soft lift; mascot logo left, sign-in right.",
+      "html": "<header class=\"ds-navbar\"><span class=\"ds-wordmark\"><span class=\"ds-wm-red\">Split</span>mate</span><a class=\"ds-nav-btn\" href=\"#\">Sign in</a></header>",
+      "css": ".ds-navbar { display:flex; align-items:center; justify-content:space-between; height:56px; padding:0 24px; background:var(--color-surface, #fff); border-bottom:1px solid #d6d3d1; box-shadow:0 2px 8px rgb(28 25 23 / 0.08); } .ds-wordmark { font:800 30px/36px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing:-0.025em; color:var(--color-ink, #1c1917); } .ds-wm-red { color:var(--color-logo-red, #e8300c); } .ds-nav-btn { padding:6px 12px; border:1px solid var(--color-primary, #ea580c); border-radius:8px; color:var(--color-primary, #ea580c); font:500 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; text-decoration:none; transition:background-color 120ms ease, color 120ms ease; } .ds-nav-btn:hover { background:var(--color-primary, #ea580c); color:#fff; }"
+    },
+    {
+      "name": "Group Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White bordered card, no shadow; the balance is the loudest element.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-card-title\">Lisbon trip</p><p class=\"ds-card-meta\">4 members</p><span class=\"ds-pill ds-pill-neg\">You owe <span class=\"ds-amount\">£8.00</span></span></div>",
+      "css": ".ds-card { background:var(--color-surface, #fff); border:1px solid var(--color-line, #e8e4de); border-radius:12px; padding:20px; font-family:Inter, ui-sans-serif, system-ui, sans-serif; } .ds-card-title { margin:0; font:600 18px/26px Inter, sans-serif; color:var(--color-ink, #1c1917); } .ds-card-meta { margin:4px 0 12px; font:400 14px/20px Inter, sans-serif; color:var(--color-ink-2, #78716c); } .ds-pill { display:inline-flex; align-items:center; gap:4px; padding:4px 12px; border-radius:999px; font:600 13px/18px Inter, sans-serif; } .ds-pill-neg { background:var(--color-neg-bg, #fef2f2); color:var(--color-neg, #991b1b); } .ds-amount { font-variant-numeric:tabular-nums; font-weight:700; letter-spacing:-0.01em; }"
+    },
+    {
+      "name": "Balance Pills",
+      "kind": "chip",
+      "refersTo": "pill-pos",
+      "description": "Balance state in words plus colour: owed, owe, settled.",
+      "html": "<span class=\"ds-bp ds-bp-pos\">You're owed £18.00</span> <span class=\"ds-bp ds-bp-neg\">You owe £8.00</span> <span class=\"ds-bp ds-bp-settled\">All settled</span>",
+      "css": ".ds-bp { display:inline-flex; align-items:center; padding:4px 12px; border-radius:999px; font:600 13px/18px Inter, ui-sans-serif, system-ui, sans-serif; font-variant-numeric:tabular-nums; white-space:nowrap; } .ds-bp-pos { background:var(--color-pos-bg, #ecfdf5); color:var(--color-pos, #065f46); } .ds-bp-neg { background:var(--color-neg-bg, #fef2f2); color:var(--color-neg, #991b1b); } .ds-bp-settled { background:var(--color-settled-bg, #f5f5f4); color:var(--color-settled, #57534e); }"
+    },
+    {
+      "name": "Member Badges",
+      "kind": "chip",
+      "refersTo": "badge-pending",
+      "description": "Active and pending member status.",
+      "html": "<span class=\"ds-badge ds-badge-active\">Active</span> <span class=\"ds-badge ds-badge-pending\">Pending</span>",
+      "css": ".ds-badge { display:inline-flex; align-items:center; padding:2px 8px; border-radius:999px; font:500 12px/16px Inter, ui-sans-serif, system-ui, sans-serif; } .ds-badge-active { background:var(--color-pos-bg, #ecfdf5); color:var(--color-pos, #065f46); } .ds-badge-pending { background:var(--color-pending-bg, #fffbeb); color:var(--color-pending, #92400e); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Honest Ledger",
+    "overview": "Splitmate looks like a well-kept household ledger on warm paper: calm, exact, and a little friendly. The page is an off-white stone tone, content sits on white cards with thin warm borders, and the only loud things on screen are the money figures and the single orange action. Splitmate is a working tool, not a showpiece. Brand character lives in small, precise details: the smiling banknote mascot, the red/black wordmark, and tabular figures that line up to the penny.\n\nThe palette is warm stone neutrals (the Tailwind stone family) with one orange voice for action and three reserved money colours for balance state. Density is moderate. Pages are wide (about 1150px) so a whole group fits in one view at the user's 1280×610 working size. Depth is almost entirely flat. The navbar is the one deliberate exception.",
+    "keyCharacteristics": [
+      "Warm off-white page, white bordered cards, no gradients.",
+      "One accent (orange) for actions only. Money colours (green, red, grey) for balance states only.",
+      "Money figures are the loudest element in any card: bold and in tabular figures.",
+      "A closed type scale of six sizes in a single family (Inter).",
+      "Friendly identity carried by the mascot logo, not by decoration in the UI."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Orange means \"you can act here\". If it isn't a button, link, focus ring or active state, it isn't orange.", "section": "colors" },
+      { "name": "The Money Palette Rule", "body": "Green, red and the settled grey describe balances and nothing else. Don't borrow them for success toasts, charts or decoration.", "section": "colors" },
+      { "name": "The Words Carry It Rule", "body": "Colour never carries a balance on its own. The wording (\"You owe\", \"owes you\", \"All settled\") always says the same thing.", "section": "colors" },
+      { "name": "The Six Sizes Rule", "body": "Only 12, 14, 16, 18, 24 and 30px exist. The default Tailwind scale is cleared on purpose. One known deviation: balance pills use 13px. Treat it as legacy and don't copy it elsewhere.", "section": "typography" },
+      { "name": "The Tabular Money Rule", "body": "Every amount uses tabular figures and bold weight so columns of pence line up.", "section": "typography" },
+      { "name": "The Borders Not Shadows Rule", "body": "Cards are separated by a 1px Stone Hairline border, never by a drop shadow. No gradients anywhere.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do make the money figure the most prominent element in its card, using `.amount` (bold, tabular figures).",
+      "Do list settlements that involve the current user first, in full colour, and mute the rest in Settled Stone.",
+      "Do use the theme tokens (`page`, `surface`, `line`, `ink`/`ink-2`/`ink-3`, `primary`, `pos`/`neg`/`settled`) and the component recipes, not raw Tailwind colours.",
+      "Do keep every page within the `max-w-6xl` container and check that it fits at about 1280×610.",
+      "Do pair every balance colour with explicit wording."
+    ],
+    "donts": [
+      "Don't add drop shadows to cards or use gradients. The navbar is the only shadowed element.",
+      "Don't use orange for anything other than actions, links, focus and active states.",
+      "Don't use the money colours outside balance states, or Wordmark Red outside the logo.",
+      "Don't introduce text sizes outside the six-step scale, or a second typeface.",
+      "Don't shrink content back to the original 680px column.",
+      "Don't display the seeded test-account credentials anywhere in the UI."
+    ]
+  }
+}

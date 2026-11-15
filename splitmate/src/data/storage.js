@@ -260,12 +260,17 @@ export async function exportGroups(groupIds) {
     ...groups.flatMap((g) => [g.createdBy, ...g.members.map((m) => m.userId)]),
     ...expenses.flatMap((e) => [e.createdBy, e.deletedBy]),
   ])
-  const users = read(KEYS.users, []).filter((u) => userIds.has(u.id))
+  // Only id, name and email go in the file, so it never carries a password.
+  const users = read(KEYS.users, [])
+    .filter((u) => userIds.has(u.id))
+    .map(({ id, name, email }) => ({ id, name, email }))
   return { app: 'splitmate', version: 1, users, groups, expenses }
 }
 
 // Adds what isn't already here; never overwrites. The same person has a
-// different id at each address, so people are matched by email.
+// different id at each address, so people are matched by email. Accounts are
+// never created from a file: members without an account here join as pending
+// and become active when they register (see createUser).
 export async function importGroups(data) {
   if (data?.app !== 'splitmate' || !Array.isArray(data.groups)) {
     throw new Error("That file isn't a Splitmate group file")
@@ -276,15 +281,9 @@ export async function importGroups(data) {
   write('splitmate.backup-before-import', { users, groups, expenses })
 
   const idMap = {}
-  let newUsers = 0
   for (const u of data.users ?? []) {
-    let local = users.find((x) => x.email === u.email)
-    if (!local) {
-      local = u
-      users.push(u)
-      newUsers++
-    }
-    idMap[u.id] = local.id
+    const local = users.find((x) => x.email === normaliseEmail(u.email))
+    if (local) idMap[u.id] = local.id
   }
   const fix = (id) => (id ? (idMap[id] ?? id) : id)
 
@@ -311,10 +310,9 @@ export async function importGroups(data) {
     newExpenses++
   }
 
-  write(KEYS.users, users)
   write(KEYS.groups, groups)
   write(KEYS.expenses, expenses)
-  return { groups: added, expenses: newExpenses, users: newUsers }
+  return { groups: added, expenses: newExpenses }
 }
 
 // Never removes the record, only flags it.

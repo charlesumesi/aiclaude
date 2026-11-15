@@ -43,7 +43,7 @@ export default function ExpenseDetailModal({ expense, members, currentEmail, dat
     <Modal title={expense.description} onClose={onClose}>
       <div className="space-y-5">
         <div>
-          <p className="amount text-3xl font-extrabold text-ink">{formatMoney(expense.amount)}</p>
+          <p className="amount text-2xl font-extrabold text-ink">{formatMoney(expense.amount)}</p>
           <p className="mt-1 text-sm text-ink-2">
             {payerLabel} paid{dateText && ` · ${dateText}`}
           </p>

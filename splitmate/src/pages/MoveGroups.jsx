@@ -7,8 +7,13 @@ import { useAsyncData } from '../hooks/useAsyncData.js'
 // Save groups to a file at one address and load them at another.
 export default function MoveGroups() {
   const { user } = useAuth()
-  const { data: groups, loading } = useAsyncData(() => storage.getGroupsForUser(user.id), [user.id])
+  const {
+    data: groups,
+    loading,
+    error: loadError,
+  } = useAsyncData(() => storage.getGroupsForUser(user.id), [user.id])
   const [picked, setPicked] = useState(new Set())
+  const [downloadError, setDownloadError] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -22,14 +27,19 @@ export default function MoveGroups() {
   }
 
   async function handleDownload() {
-    const data = await storage.exportGroups([...picked])
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'splitmate-groups.json'
-    a.click()
-    URL.revokeObjectURL(url)
+    setDownloadError('')
+    try {
+      const data = await storage.exportGroups([...picked])
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'splitmate-groups.json'
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      setDownloadError(`Couldn’t make the file: ${err.message}`)
+    }
   }
 
   async function handleFile(e) {
@@ -68,6 +78,8 @@ export default function MoveGroups() {
         <h2 className="text-lg text-ink">1. Download groups from here</h2>
         {loading ? (
           <p className="text-sm text-ink-3">Loading…</p>
+        ) : loadError ? (
+          <p className="text-sm text-danger">Couldn’t load your groups: {loadError.message}</p>
         ) : !groups?.length ? (
           <p className="text-sm text-ink-3">You have no groups at this address.</p>
         ) : (
@@ -95,6 +107,7 @@ export default function MoveGroups() {
             >
               Download file
             </button>
+            {downloadError && <p className="text-sm text-danger">{downloadError}</p>}
           </>
         )}
       </section>
