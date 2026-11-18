@@ -60,3 +60,5 @@ The user later deliberately overrode parts of that spec, so keep these:
 ## Other files
 
 `zfolder/` holds the user's prompt notes and reference screenshots; it is not part of the app.
+
+`.claude/skills/` holds project skills: `accessibility`, `code-review`, `explain-code`, `impeccable`, `update-readme`, and `update-claude` (patches this file with what changed in a session; never rewrites it).
