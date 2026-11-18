@@ -180,6 +180,11 @@ export default function GroupDetail() {
                         {categoryOf(e)}
                       </span>
                     </div>
+                    {e.notes && (
+                      <p className="mt-0.5 truncate text-sm text-ink-2" title={e.notes}>
+                        {e.notes}
+                      </p>
+                    )}
                     <p className="mt-0.5 text-xs text-ink-3">
                       {label(e.paidBy)} paid · {formatDate(e.date)}
                     </p>

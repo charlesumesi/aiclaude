@@ -222,9 +222,9 @@ export async function getExpenses(groupId, { includeDeleted = false } = {}) {
   )
 }
 
-// expense: { groupId, description, amount (pence), date ('YYYY-MM-DD'),
-//            paidBy (member email), splits: [{ email, amount (pence) }],
-//            splitType ('equal' | 'manual'), createdBy }
+// expense: { groupId, description, notes (string, '' if none), amount (pence),
+//            date ('YYYY-MM-DD'), paidBy (member email), category,
+//            splits: [{ email, amount (pence) }], splitType ('equal' | 'manual'), createdBy }
 export async function addExpense(expense) {
   // Balances assume the splits add up to the total, so never store one that doesn't.
   const splits = expense.splits ?? []
@@ -237,6 +237,7 @@ export async function addExpense(expense) {
   const record = {
     id: newId(),
     ...expense,
+    notes: typeof expense.notes === 'string' ? expense.notes.trim() : '',
     isDeleted: false,
     createdAt: new Date().toISOString(),
   }

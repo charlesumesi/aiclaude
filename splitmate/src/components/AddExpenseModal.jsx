@@ -12,6 +12,7 @@ function todayISO() {
 // members: [{ email, label }] — label is the display name ("You", "Bob", or an email)
 export default function AddExpenseModal({ members, currentEmail, onSave, onClose }) {
   const [description, setDescription] = useState('')
+  const [notes, setNotes] = useState('')
   const [amountInput, setAmountInput] = useState('')
   const [date, setDate] = useState(todayISO)
   const [paidBy, setPaidBy] = useState(currentEmail)
@@ -138,6 +139,7 @@ export default function AddExpenseModal({ members, currentEmail, onSave, onClose
     try {
       await onSave({
         description: description.trim(),
+        notes: notes.trim(),
         amount,
         date,
         paidBy,
@@ -165,6 +167,21 @@ export default function AddExpenseModal({ members, currentEmail, onSave, onClose
             placeholder="e.g. Dinner at Dishoom"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label className="label" htmlFor="exp-notes">
+            Notes <span className="font-normal text-ink-3">(optional)</span>
+          </label>
+          <textarea
+            id="exp-notes"
+            rows={2}
+            maxLength={500}
+            className="input resize-y"
+            placeholder="e.g. Includes the service charge"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
           />
         </div>
 
